@@ -1,24 +1,24 @@
 <?php
-// Configuration de la connexion à la base de données MySQL
-// COPIE CE FICHIER EN `config.php` ET RENSEIGNE TES VALEURS LOCALES
+// MySQL database connection configuration
+// COPY THIS FILE TO `config.php` AND FILL IN YOUR LOCAL VALUES
 
-$host = 'ton_hote_mysql'; // Remplace par l’adresse de ton serveur MySQL (ex: 'my_mysql' pour Docker)
-$db   = 'nom_de_ta_base';  // Remplace par le nom de ta base de données
-$user = 'ton_utilisateur'; // Remplace par ton utilisateur MySQL (ex: 'root' en développement)
-$pass = 'ton_mot_de_passe'; // Remplace par ton mot de passe MySQL (ne pas utiliser 'root123' en production !)
-$charset = 'utf8mb4';      // Jeu de caractères (utf8mb4 recommandé pour Unicode/emojis)
+$host = 'your_mysql_host'; // Replace with your MySQL server address (e.g., 'my_mysql' for Docker)
+$db   = 'your_database_name';  // Replace with your database name
+$user = 'your_username'; // Replace with your MySQL username (e.g., 'root' for development)
+$pass = 'your_password'; // Replace with your MySQL password (do not use 'root123' in production!)
+$charset = 'utf8mb4';      // Character set (utf8mb4 recommended for Unicode/emojis)
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
-// Options de configuration pour PDO
+// PDO configuration options
 $options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,  // Mode d'erreur : exceptions
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Récupération par défaut : tableaux associatifs
-    PDO::ATTR_EMULATE_PREPARES   => false,                   // Désactive l'émulation des requêtes préparées
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,  // Error mode: exceptions
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Default fetch mode: associative arrays
+    PDO::ATTR_EMULATE_PREPARES   => false,                   // Disable prepared statement emulation
 ];
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options); // Connexion à la base de données
+    $pdo = new PDO($dsn, $user, $pass, $options); // Database connection
 } catch (\PDOException $e) {
-    throw new \PDOException($e->getMessage(), (int)$e->getCode()); // Gestion des erreurs
+    throw new \PDOException($e->getMessage(), (int)$e->getCode()); // Error handling
 }
 ?>
