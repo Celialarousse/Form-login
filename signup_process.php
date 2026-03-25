@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($stmt->fetch()) {
                 $_SESSION['registration_error'] = "An account already exists with this email.";
             } else {
-                $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe) VALUES (?, ?, ?, ?)");
+                $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, is_active) VALUES (?, ?, ?, ?, 1)");
                 $stmt->execute([$lastname, $firstname, $email, $hashed_password]);
                 $_SESSION['registration_success'] = "Your account has been successfully created! You can now log in.";
             }

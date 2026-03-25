@@ -9,13 +9,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // Check if the form was submitted u
     $password = $_POST["password"];
 
     try {
-        $stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe FROM utilisateurs WHERE email = ?");
+        $stmt = $pdo->prepare("SELECT id, nom, prenom, email, mot_de_passe, is_active FROM utilisateurs WHERE email = ?");
         // Prepare a SQL query to select the user with the provided email
         $stmt->execute([$email]);
         $user = $stmt->fetch(); // Fetch the query results as an associative array
 
         // Check if a user was found and if the password is correct
         if ($user && password_verify($password, $user['mot_de_passe'])) {
+            // ✅ Vérification du compte actif
+            if ($user['is_active'] == 0) {
+                $_SESSION['login_error'] = "Your account has been disabled. Please contact support.";
+                header("Location: login.php");
+            exit();
+            }
+
+            $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_nom'] = $user['nom'];
