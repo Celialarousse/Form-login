@@ -431,6 +431,255 @@ input[type="password"]:focus {
 }
 
 /* ══════════════════════════════════════
+   CRUD — LISTE
+══════════════════════════════════════ */
+.crud-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 40px 80px;
+}
+
+.crud-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.crud-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--black);
+    text-align: left;
+    margin: 0;
+}
+
+.btn-add {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--black);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.btn-add:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+}
+
+/* Table */
+.table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+}
+
+.crud-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white);
+    font-size: 14px;
+}
+
+.crud-table thead {
+    background: var(--black);
+    color: var(--white);
+}
+
+.crud-table th {
+    padding: 14px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.crud-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--gray-mid);
+    color: #333;
+    vertical-align: middle;
+}
+
+.crud-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.crud-table tbody tr:hover {
+    background: var(--gray-light);
+}
+
+/* Badges type */
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.badge-roadster   { background: #e3f2fd; color: #1565c0; }
+.badge-sportive   { background: #fce4ec; color: #c62828; }
+.badge-trail      { background: #e8f5e9; color: #2e7d32; }
+.badge-motocross  { background: #fff3e0; color: #e65100; }
+.badge-custom     { background: #f3e5f5; color: #6a1b9a; }
+
+/* Boutons actions */
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-edit, .btn-delete {
+    padding: 6px 14px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s, transform 0.15s;
+}
+
+.btn-edit {
+    background: #f0f0f0;
+    color: var(--black);
+}
+
+.btn-edit:hover {
+    background: var(--gray-mid);
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background: #fde8e8;
+    color: var(--accent);
+}
+
+.btn-delete:hover {
+    background: #fbd0d0;
+    transform: translateY(-1px);
+}
+
+/* Empty state */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    color: var(--gray-text);
+}
+
+.empty-state p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* ══════════════════════════════════════
+   CRUD — FORMULAIRE AJOUT / ÉDITION
+══════════════════════════════════════ */
+.crud-form-container {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    padding: 36px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.crud-form-container .form-group {
+    margin-bottom: 22px;
+}
+
+.crud-form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    color: var(--black);
+}
+
+.crud-form-container input[type="text"],
+.crud-form-container input[type="number"],
+.crud-form-container select,
+.crud-form-container textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--gray-mid);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--black);
+    background: var(--white);
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.crud-form-container input:focus,
+.crud-form-container select:focus,
+.crud-form-container textarea:focus {
+    border-color: var(--black);
+    outline: none;
+}
+
+.crud-form-container textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.btn-save {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--black);
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+}
+
+.btn-save:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+}
+
+.btn-back {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-text);
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.btn-back:hover {
+    background: var(--gray-light);
+    color: var(--black);
+}
+
+
+/* ══════════════════════════════════════
    RESPONSIVE
 ══════════════════════════════════════ */
 @media (max-width: 1024px) and (min-width: 769px) {
@@ -484,4 +733,19 @@ input[type="password"]:focus {
         min-height: 48px;
         padding: 12px 16px;
     }
+}
+
+/* Responsive table */
+@media (max-width: 768px) {
+    .crud-section { padding: 30px 20px 60px; }
+    .crud-header { flex-direction: column; align-items: flex-start; gap: 15px; }
+    .crud-title { font-size: 36px; }
+}
+
+@media (max-width: 768px) {
+    .form-row { grid-template-columns: 1fr; }
+    .crud-form-container { padding: 24px 20px; }
+    .form-actions { flex-direction: column-reverse; width: 100%; }
+    .btn-save { width: 100%; text-align: center; }
+    .btn-back { width: 100%; text-align: center; }
 }
