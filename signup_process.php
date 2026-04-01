@@ -3,8 +3,8 @@ session_start();
 require 'config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $lastname = trim($_POST["lastname"]);
-    $firstname = trim($_POST["firstname"]);
+    $lastname = trim($_POST["nom"]);
+    $firstname = trim($_POST["prenom"]);
     $email = trim($_POST["email"]);
     $password = $_POST["password"];
     $confirm_password = $_POST["confirm_password"];
