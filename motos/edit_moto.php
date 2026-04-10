@@ -2,15 +2,15 @@
 session_start();
 
 if (!isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
-require 'config.php';
+require '../config/config.php';
 
 // Vérifier que l'id est présent dans l'URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: motos.php");
+    header("Location: ../motos/motos.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ $moto = $stmt->fetch();
 
 // Si la moto n'existe pas → retour à la liste
 if (!$moto) {
-    header("Location: motos.php");
+    header("Location: ../motos/motos.php");
     exit();
 }
 ?>
@@ -33,7 +33,7 @@ if (!$moto) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier une moto — BikePulse</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/styles.css">
 </head>
 <body>
 

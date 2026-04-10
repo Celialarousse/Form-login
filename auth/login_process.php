@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require 'config.php'; // Include the database configuration file
+require '../config/config.php'; // Include the database configuration file
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") { // Check if the form was submitted using the POST method
     // Retrieve the email and password submitted by the user
@@ -19,21 +19,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // Check if the form was submitted u
             // ✅ Vérification du compte actif
             if ($user['is_active'] == 0) {
                 $_SESSION['login_error'] = "Your account has been disabled. Please contact support.";
-                header("Location: login.php");
+                header("Location: ../auth/login.php");
             exit();
             }
 
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_nom'] = $user['nom'];
             $_SESSION['user_prenom'] = $user['prenom'];
-            header("Location: home.php");
+            header("Location: ../home.php"); // Redirect to the home page after successful login
             exit();
         } else {
             // Store an error message in the session to display on the login page
             $_SESSION['login_error'] = "Incorrect email or password.";
-            header("Location: login.php");
+            header("Location: ../auth/login.php");
             exit();
         }
     } catch(PDOException $e) {
@@ -50,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { // Check if the form was submitted u
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Login Result</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../assets/styles.css">
     </head>
     <body>
         <div class="welcome-container">

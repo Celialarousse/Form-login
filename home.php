@@ -5,7 +5,7 @@ session_start();
 // Check if the user is logged in by verifying the presence of the email in the session
 // If the user is not logged in, redirect them to the login page
 if (!isset($_SESSION['user_email'])) {
-    header("Location: login.php"); // Redirect to the login page
+    header("Location: ../auth/login.php"); // Redirect to the login page
     exit(); // Stop script execution after redirection
 }
 ?>
@@ -17,7 +17,7 @@ if (!isset($_SESSION['user_email'])) {
         <!-- Makes the page responsive by adapting the width to the device -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Home - BikePulse</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="assets/styles.css">
     </head>
     <body>
         <nav>

@@ -3,7 +3,7 @@ session_start();
 session_unset(); // This clears all data stored in the session
 session_destroy(); // This deletes the session on the server side
 
-header("Location: login.php");
+header("Location: ../auth/login.php");
 exit();
 ?>
 
@@ -13,7 +13,7 @@ exit();
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Logout</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../assets/styles.css">
     </head>
     <body>
         <div class="welcome-container">

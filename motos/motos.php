@@ -2,12 +2,11 @@
 session_start();
 
 if (!isset($_SESSION['user_email'])) {
-    header('Location: login.php');
+    header('Location: .../auth/login.php');
     exit();
 }
 
-require 'config.php';
-
+require '../config/config.php';
 //Récupération de toute les motos
 $stmt = $pdo->query('SELECT * FROM motos ORDER BY date_ajout DESC');
 $motos = $stmt->fetchAll();
@@ -19,7 +18,7 @@ $motos = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liste des Motos - BikePulse</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../assets/styles.css">
 </head>
 
 <body>

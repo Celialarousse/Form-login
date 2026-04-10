@@ -1,15 +1,15 @@
 <?php
 session_start();
-require 'config.php';
+require '../config/config.php';
 
 if (!isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
 // Vérifier que l'id est présent dans l'URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: motos.php");
+    header("Location: ../motos/motos.php");
     exit();
 }
 
@@ -23,7 +23,7 @@ try {
 
     if (!$moto) {
         $_SESSION['crud_error'] = "Cette moto n'existe pas.";
-        header("Location: motos.php");
+        header("Location: ../motos/motos.php");
         exit();
     }
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'config.php';
+require '../config/config.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $lastname = trim($_POST["nom"]);
@@ -29,13 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->execute([$lastname, $firstname, $email, $hashed_password]);
                 $_SESSION['registration_success'] = "Your account has been successfully created! You can now log in.";
             }
-            header("Location: signup.php");
+            header("Location: ../auth/signup.php");
             exit();
         } catch(PDOException $e) {
             $_SESSION['registration_error'] = "Error: " . $e->getMessage();
         }
     }
-    header("Location: signup.php");
+    header("Location: ../auth/signup.php");
     exit();
 }
 ?>
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registration Result</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../assets/styles.css">
     </head>
     <body>
         <div class="welcome-container">

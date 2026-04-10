@@ -1,9 +1,9 @@
 <?php
 session_start();
-require 'config.php';
+require '../config/config.php';
 
 if (!isset($_SESSION['user_email'])) {
-    header("Location: login.php");
+    header("Location: ../auth/login.php");
     exit();
 }
 
@@ -30,16 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->execute([$marque, $modele, $type, $annee, $cylindree, $puissance, $description, $id]);
 
         $_SESSION['crud_success'] = "La moto \"$marque $modele\" a bien été modifiée !";
-        header("Location: motos.php");
+        header("Location: ../motos/motos.php");
         exit();
 
     } catch (PDOException $e) {
         $_SESSION['crud_error'] = "Erreur lors de la modification : " . $e->getMessage();
-        header("Location: edit_moto.php?id=$id");
+        header("Location: ../moto/edit_moto.php?id=$id");
         exit();
     }
 }
 
-header("Location: motos.php");
+header("Location: ../motos/motos.php");
 exit();
 ?>
