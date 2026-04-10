@@ -3,7 +3,7 @@ session_start();
 session_unset(); // This clears all data stored in the session
 session_destroy(); // This deletes the session on the server side
 
-header("Location: ../auth/login.php");
+header("Location: /Formulaire/auth/login.php");
 exit();
 ?>
 

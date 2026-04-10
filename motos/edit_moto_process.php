@@ -3,12 +3,11 @@ session_start();
 require '../config/config.php';
 
 if (!isset($_SESSION['user_email'])) {
-    header("Location: ../auth/login.php");
+    header("Location: /Formulaire/auth/login.php");
     exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $id          = (int)$_POST["id"];
     $marque      = trim($_POST["marque"]);
     $modele      = trim($_POST["modele"]);
@@ -18,28 +17,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $puissance   = !empty($_POST["puissance"])  ? (int)$_POST["puissance"]  : null;
     $description = trim($_POST["description"]);
 
-    // Validation
     if (empty($marque) || empty($modele) || empty($type)) {
         $_SESSION['crud_error'] = "Les champs Marque, Modèle et Type sont obligatoires.";
-        header("Location: edit_moto.php?id=$id");
+        header("Location: /Formulaire/motos/edit_moto.php?id=$id");
         exit();
     }
 
     try {
         $stmt = $pdo->prepare("UPDATE motos SET marque = ?, modele = ?, type = ?, annee = ?, cylindree = ?, puissance = ?, description = ? WHERE id = ?");
         $stmt->execute([$marque, $modele, $type, $annee, $cylindree, $puissance, $description, $id]);
-
         $_SESSION['crud_success'] = "La moto \"$marque $modele\" a bien été modifiée !";
-        header("Location: ../motos/motos.php");
+        header("Location: /Formulaire/motos/add_moto.php");
         exit();
-
     } catch (PDOException $e) {
         $_SESSION['crud_error'] = "Erreur lors de la modification : " . $e->getMessage();
-        header("Location: ../moto/edit_moto.php?id=$id");
+        header("Location: /Formulaire/motos/edit_moto.php?id=$id");
         exit();
     }
 }
 
-header("Location: ../motos/motos.php");
+header("Location: /Formulaire/motos/add_moto.php");
 exit();
 ?>

@@ -121,6 +121,23 @@ nav {
     transform: translateY(-1px);
 }
 
+/* Bouton Connexion navbar (style discret) */
+.btn-nav-login {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--black);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1.5px solid var(--gray-mid);
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.btn-nav-login:hover {
+    border-color: var(--black);
+    color: var(--black);
+}
+
 /* ══════════════════════════════════════
    HERO
 ══════════════════════════════════════ */
@@ -678,6 +695,99 @@ input[type="password"]:focus {
     color: var(--black);
 }
 
+/* ══════════════════════════════════════
+   FILTRES
+══════════════════════════════════════ */
+.filters-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px 20px;
+}
+
+.filters-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.filter-search {
+    flex: 1;
+    min-width: 220px;
+    padding: 10px 16px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    background: var(--white);
+}
+
+.filter-search:focus {
+    border-color: var(--black);
+    outline: none;
+}
+
+.filter-select {
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-mid);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--white);
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.filter-select:focus {
+    border-color: var(--black);
+    outline: none;
+}
+
+.results-count {
+    font-size: 13px;
+    color: var(--gray-text);
+}
+
+/* ══════════════════════════════════════
+   CARTES MOTOS
+══════════════════════════════════════ */
+.moto-placeholder {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    font-size: 48px;
+}
+
+.moto-specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.spec {
+    font-size: 12px;
+    background: var(--gray-light);
+    border-radius: 6px;
+    padding: 4px 10px;
+    color: #444;
+}
+
+.spec strong {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--gray-text);
+    margin-bottom: 1px;
+}
+
+.card-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 14px;
+}
 
 /* ══════════════════════════════════════
    RESPONSIVE
@@ -748,4 +858,13 @@ input[type="password"]:focus {
     .form-actions { flex-direction: column-reverse; width: 100%; }
     .btn-save { width: 100%; text-align: center; }
     .btn-back { width: 100%; text-align: center; }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE FILTRES
+══════════════════════════════════════ */
+@media (max-width: 768px) {
+    .filters-section { padding: 0 20px 20px; }
+    .filters-bar { flex-direction: column; align-items: stretch; }
+    .filter-search, .filter-select { width: 100%; }
 }

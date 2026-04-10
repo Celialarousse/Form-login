@@ -1,66 +1,81 @@
 <?php
 session_start();
+// Si déjà connecté, rediriger vers home
+if (isset($_SESSION['user_email'])) {
+    header("Location: /Formulaire/home.php");
+    exit();
+}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
-        <link rel="stylesheet" href="../assets/styles.css">
-    </head>
-    <body>
-        <?php
-        if (isset($_SESSION['registration_error'])) { // Display an error message if registration failed. This message is stored in the session during registration processing
-            echo '<div class="alert alert-danger">' . htmlspecialchars($_SESSION['registration_error']) . '</div>'; // htmlspecialchars() protects against XSS attacks by escaping special characters
-            unset($_SESSION['registration_error']); // Remove the message from the session after displaying it
-        }
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - BikePulse</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
 
-        if (isset($_SESSION['registration_success'])) { // Display a success message if registration was successful. This message is stored in the session after a successful registration
-            echo '<div class="alert alert-success">' . htmlspecialchars($_SESSION['registration_success']) . '</div>';
-            unset($_SESSION['registration_success']); // Remove the message from the session after displaying it
-        }
-        ?>
+<nav>
+    <a href="/Formulaire/home.php" class="nav-logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/>
+        </svg>
+        BikePulse
+    </a>
 
-        <!-- Main container for the registration form -->
-        <div class="form-container">
-            <h1>Create an account</h1>
+    <ul class="nav-links">
+        <li><a href="/Formulaire/motos/motos.php">Fiches</a></li>
+        <li><a href="/Formulaire/motos/add_moto.php">Inscription de référence</a></li>
+        <li><a href="#">Info &amp; Service</a></li>
+    </ul>
 
-            <form action="signup_process.php" method="post"> <!-- action="signup_process.php": the form sends data to this file for processing -->
-                <div class="form-group">
-                    <label for="nom">Last name:</label>
-                    <input type="text" id="nom" name="nom" required>
-                </div>
+    <div class="nav-right">
+        <a href="/Formulaire/auth/login.php" class="btn-nav-login">Connexion</a>
+        <a href="/Formulaire/auth/signup.php" class="btn-logout">Inscription</a>
+    </div>
+</nav>
 
-                <div class="form-group">
-                    <label for="prenom">First name:</label>
-                    <input type="text" id="prenom" name="prenom" required>
-                </div>
+<?php if (isset($_SESSION['registration_error'])): ?>
+    <div class="alert alert-danger"><?php echo htmlspecialchars($_SESSION['registration_error']); unset($_SESSION['registration_error']); ?></div>
+<?php endif; ?>
 
-                <div class="form-group">
-                    <label for="email">Email address:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
+<?php if (isset($_SESSION['registration_success'])): ?>
+    <div class="alert alert-success"><?php echo htmlspecialchars($_SESSION['registration_success']); unset($_SESSION['registration_success']); ?></div>
+<?php endif; ?>
 
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <div class="password-container">
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirm_password">Confirm password:</label>
-                    <div class="password-container">
-                        <input type="password" id="confirm_password" name="confirm_password" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">Sign up</button>
-
-                <p class="login-link">Already have an account? <a href="login.php">Log in</a></p>
-            </form>
+<div class="form-container">
+    <h1>Créer un compte</h1>
+    <form action="signup_process.php" method="post">
+        <div class="form-group">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
         </div>
-    </body>
+        <div class="form-group">
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Adresse email :</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="confirm_password">Confirmer le mot de passe :</label>
+            <div class="password-container">
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+        </div>
+        <button type="submit" class="submit-btn">S'inscrire</button>
+        <p class="login-link">Déjà un compte ? <a href="login.php">Se connecter</a></p>
+    </form>
+</div>
+
+</body>
 </html>
