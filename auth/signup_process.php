@@ -10,29 +10,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirm_password = $_POST["confirm_password"];
 
     if (empty($lastname) || empty($firstname) || empty($email) || empty($password) || empty($confirm_password)) {
-        $_SESSION['registration_error'] = "All fields are required.";
+        $_SESSION['registration_error'] = "Tous les champs sont obligatoires.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['registration_error'] = "The email is not valid.";
+        $_SESSION['registration_error'] = "L'adresse email n'est pas valide.";
     } elseif (strlen($password) < 8) {
-        $_SESSION['registration_error'] = "The password must be at least 8 characters long.";
+        $_SESSION['registration_error'] = "Le mot de passe doit contenir au moins 8 caractères.";
     } elseif ($password !== $confirm_password) {
-        $_SESSION['registration_error'] = "The passwords do not match.";
+        $_SESSION['registration_error'] = "Les mots de passe ne correspondent pas.";
     } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
         try {
             $stmt = $pdo->prepare("SELECT id FROM utilisateurs WHERE email = ?");
             $stmt->execute([$email]);
             if ($stmt->fetch()) {
-                $_SESSION['registration_error'] = "An account already exists with this email.";
+                $_SESSION['registration_error'] = "Un compte existe déjà avec cette adresse email.";
             } else {
                 $stmt = $pdo->prepare("INSERT INTO utilisateurs (nom, prenom, email, mot_de_passe, is_active) VALUES (?, ?, ?, ?, 1)");
                 $stmt->execute([$lastname, $firstname, $email, $hashed_password]);
-                $_SESSION['registration_success'] = "Your account has been successfully created! You can now log in.";
+                $_SESSION['registration_success'] = "Votre compte a bien été créé ! Vous pouvez maintenant vous connecter.";
             }
             header("Location: ../auth/signup.php");
             exit();
         } catch(PDOException $e) {
-            $_SESSION['registration_error'] = "Error: " . $e->getMessage();
+            $_SESSION['registration_error'] = "Erreur : " . $e->getMessage();
         }
     }
     header("Location: ../auth/signup.php");

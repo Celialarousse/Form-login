@@ -7,15 +7,32 @@ if (!isset($_SESSION['user_email'])) {
     exit();
 }
 
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+// On accepte uniquement POST maintenant
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: /Formulaire/motos/add_moto.php");
     exit();
 }
 
-$id = (int)$_GET['id'];
+// Vérification du token CSRF
+if (
+    !isset($_POST['csrf_token']) ||
+    !isset($_SESSION['csrf_token']) ||
+    !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])
+) {
+    $_SESSION['crud_error'] = "Action non autorisée (token invalide).";
+    header("Location: /Formulaire/motos/add_moto.php");
+    exit();
+}
+
+if (!isset($_POST['id']) || !is_numeric($_POST['id'])) {
+    header("Location: /Formulaire/motos/add_moto.php");
+    exit();
+}
+
+$id = (int)$_POST['id'];
 
 try {
-    $stmt = $pdo->prepare("SELECT marque, modele FROM motos WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT marque, modele, image FROM motos WHERE id = ?");
     $stmt->execute([$id]);
     $moto = $stmt->fetch();
 
@@ -23,6 +40,14 @@ try {
         $_SESSION['crud_error'] = "Cette moto n'existe pas.";
         header("Location: /Formulaire/motos/add_moto.php");
         exit();
+    }
+
+    // Supprimer l'image associée si elle existe
+    if (!empty($moto['image'])) {
+        $imagePath = '/var/www/html/Formulaire/uploads/motos/' . $moto['image'];
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
     }
 
     $stmt = $pdo->prepare("DELETE FROM motos WHERE id = ?");

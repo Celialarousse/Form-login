@@ -116,6 +116,7 @@ $motos = $stmt->fetchAll();
     <?php else: ?>
         <div class="cards-grid">
             <?php foreach ($motos as $moto): ?>
+            <a href="/Formulaire/motos/moto_detail.php?id=<?php echo $moto['id']; ?>" class="card-link-detail">
             <div class="card">
                 <div class="card-img-wrap">
                     <?php if (!empty($moto['image'])): ?>
@@ -145,6 +146,7 @@ $motos = $stmt->fetchAll();
                     <?php endif; ?>
                 </div>
             </div>
+            </a>
             <?php endforeach; ?>
         </div>
     <?php endif; ?>

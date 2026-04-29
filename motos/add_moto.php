@@ -6,6 +6,11 @@ if (!isset($_SESSION['user_email'])) {
 }
 require '../config/config.php';
 
+// Génération du token CSRF (une seule fois par session)
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $stmt = $pdo->query("SELECT * FROM motos ORDER BY id DESC");
 $motos = $stmt->fetchAll();
 ?>
@@ -155,7 +160,11 @@ $motos = $stmt->fetchAll();
                     <?php endif; ?>
                     <div class="card-actions">
                         <a href="/Formulaire/motos/edit_moto.php?id=<?php echo $moto['id']; ?>" class="btn-edit">Modifier</a>
-                        <a href="/Formulaire/motos/delete_moto.php?id=<?php echo $moto['id']; ?>" class="btn-delete" onclick="return confirm('Supprimer cette moto ?')">Supprimer</a>
+                        <form action="/Formulaire/motos/delete_moto.php" method="post" onsubmit="return confirm('Supprimer cette moto ?')" style="display:inline;">
+                            <input type="hidden" name="id" value="<?php echo $moto['id']; ?>">
+                            <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                            <button type="submit" class="btn-delete">Supprimer</button>
+                        </form>
                     </div>
                 </div>
             </div>
