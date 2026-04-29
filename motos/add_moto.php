@@ -6,7 +6,6 @@ if (!isset($_SESSION['user_email'])) {
 }
 require '../config/config.php';
 
-// Récupération des motos pour la liste du bas
 $stmt = $pdo->query("SELECT * FROM motos ORDER BY id DESC");
 $motos = $stmt->fetchAll();
 ?>
@@ -60,7 +59,8 @@ $motos = $stmt->fetchAll();
         <h2 class="crud-title">Ajouter une moto</h2>
     </div>
     <div class="crud-form-container">
-        <form action="/Formulaire/motos/add_moto_process.php" method="post">
+        <!-- enctype obligatoire pour l'upload de fichier -->
+        <form action="/Formulaire/motos/add_moto_process.php" method="post" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="form-group">
                     <label for="marque">Marque *</label>
@@ -102,6 +102,11 @@ $motos = $stmt->fetchAll();
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="4" placeholder="Décrivez la moto..."></textarea>
             </div>
+            <div class="form-group">
+                <label for="image">Image de la moto</label>
+                <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                <small style="color:var(--gray-text);font-size:12px;">Formats acceptés : JPG, PNG, WEBP — Max 5 Mo</small>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn-save">Enregistrer la moto</button>
             </div>
@@ -109,7 +114,7 @@ $motos = $stmt->fetchAll();
     </div>
 </section>
 
-<!-- LISTE DES MOTOS AVEC ACTIONS -->
+<!-- LISTE DES MOTOS -->
 <section class="cards-section">
     <div class="crud-header" style="margin-bottom:24px;">
         <h2 class="crud-title">Motos enregistrées</h2>
@@ -123,7 +128,13 @@ $motos = $stmt->fetchAll();
             <?php foreach ($motos as $moto): ?>
             <div class="card">
                 <div class="card-img-wrap">
-                    <div class="card-placeholder moto-placeholder">🏍️</div>
+                    <?php if (!empty($moto['image'])): ?>
+                        <img src="/Formulaire/uploads/motos/<?php echo htmlspecialchars($moto['image']); ?>"
+                             alt="<?php echo htmlspecialchars($moto['marque'] . ' ' . $moto['modele']); ?>"
+                             class="card-img">
+                    <?php else: ?>
+                        <div class="card-placeholder moto-placeholder">🏍️</div>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
                     <div class="card-tag"><?php echo ucfirst($moto['type']); ?></div>

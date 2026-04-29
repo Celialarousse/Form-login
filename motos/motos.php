@@ -118,7 +118,13 @@ $motos = $stmt->fetchAll();
             <?php foreach ($motos as $moto): ?>
             <div class="card">
                 <div class="card-img-wrap">
-                    <div class="card-placeholder moto-placeholder">🏍️</div>
+                    <?php if (!empty($moto['image'])): ?>
+                        <img src="/Formulaire/uploads/motos/<?php echo htmlspecialchars($moto['image']); ?>"
+                             alt="<?php echo htmlspecialchars($moto['marque'] . ' ' . $moto['modele']); ?>"
+                             class="card-img">
+                    <?php else: ?>
+                        <div class="card-placeholder moto-placeholder">🏍️</div>
+                    <?php endif; ?>
                 </div>
                 <div class="card-body">
                     <div class="card-tag"><?php echo ucfirst($moto['type']); ?></div>

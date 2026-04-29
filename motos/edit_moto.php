@@ -38,8 +38,8 @@ if (!$moto) {
         BikePulse
     </a>
     <ul class="nav-links">
-        <li><a href="/Formulaire/motos/add_moto.php">Fiches</a></li>
-        <li><a href="#">Inscription de référence</a></li>
+        <li><a href="/Formulaire/motos/motos.php">Fiches</a></li>
+        <li><a href="/Formulaire/motos/add_moto.php">Inscription de référence</a></li>
         <li><a href="#">Info &amp; Service</a></li>
     </ul>
     <div class="nav-right">
@@ -47,17 +47,21 @@ if (!$moto) {
         <a href="/Formulaire/auth/logout.php" class="btn-logout">Déconnexion</a>
     </div>
 </nav>
+
 <section class="crud-section">
     <div class="crud-header">
         <h1 class="crud-title">Modifier une moto</h1>
-        <a href="/Formulaire/motos/add_moto.php" class="btn-back">← Retour à la liste</a>
+        <a href="/Formulaire/motos/add_moto.php" class="btn-back">← Retour</a>
     </div>
+
     <?php if (isset($_SESSION['crud_error'])): ?>
         <div class="alert alert-danger"><?php echo htmlspecialchars($_SESSION['crud_error']); unset($_SESSION['crud_error']); ?></div>
     <?php endif; ?>
+
     <div class="crud-form-container">
-        <form action="/Formulaire/motos/edit_moto_process.php" method="post">
+        <form action="/Formulaire/motos/edit_moto_process.php" method="post" enctype="multipart/form-data">
             <input type="hidden" name="id" value="<?php echo $moto['id']; ?>">
+
             <div class="form-row">
                 <div class="form-group">
                     <label for="marque">Marque *</label>
@@ -98,6 +102,22 @@ if (!$moto) {
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="4"><?php echo htmlspecialchars($moto['description'] ?? ''); ?></textarea>
             </div>
+
+            <div class="form-group">
+                <label>Image actuelle</label>
+                <?php if (!empty($moto['image'])): ?>
+                    <div style="margin-bottom:10px;">
+                        <img src="/Formulaire/uploads/motos/<?php echo htmlspecialchars($moto['image']); ?>"
+                             alt="Image actuelle" style="max-width:200px;border-radius:8px;display:block;">
+                    </div>
+                <?php else: ?>
+                    <p style="color:var(--gray-text);font-size:13px;margin-bottom:10px;">Aucune image enregistrée.</p>
+                <?php endif; ?>
+                <label for="image">Changer l'image</label>
+                <input type="file" id="image" name="image" accept="image/jpeg,image/png,image/webp">
+                <small style="color:var(--gray-text);font-size:12px;">Laissez vide pour conserver l'image actuelle. Formats : JPG, PNG, WEBP — Max 5 Mo</small>
+            </div>
+
             <div class="form-actions">
                 <a href="/Formulaire/motos/add_moto.php" class="btn-back">Annuler</a>
                 <button type="submit" class="btn-save">Enregistrer les modifications</button>
